@@ -16,10 +16,9 @@ namespace DbUp.Firebird
         /// Creates a new Firebird table journal.
         /// </summary>
         /// <param name="connectionManager">The Firebird connection manager.</param>
-        /// <param name="logger">The upgrade logger.</param>
         /// <param name="tableName">The name of the journal table.</param>
-        public FirebirdTableJournal(Func<IConnectionManager> connectionManager, Func<IUpgradeLog> logger, string tableName)
-            : base(connectionManager, logger, new FirebirdObjectParser(), null, tableName)
+        public FirebirdTableJournal(Func<IConnectionManager> connectionManager, string tableName)
+            : base(connectionManager, new FirebirdObjectParser(), null, tableName)
         {
         }
 
@@ -60,9 +59,9 @@ END;";
         {
             var unqotedTableName = UnquoteSqlObjectName(FqSchemaTableName);
             ExecuteCommand(dbCommandFactory, CreateGeneratorSql(unqotedTableName));
-            Log().WriteInformation($"The {GeneratorName(unqotedTableName)} generator has been created");
+            Log.Info($"The {GeneratorName(unqotedTableName)} generator has been created");
             ExecuteCommand(dbCommandFactory, CreateTriggerSql(unqotedTableName));
-            Log().WriteInformation($"The {TriggerName(unqotedTableName)} trigger has been created");
+            Log.Info($"The {TriggerName(unqotedTableName)} trigger has been created");
         }
 
         protected override string DoesTableExistSql()
