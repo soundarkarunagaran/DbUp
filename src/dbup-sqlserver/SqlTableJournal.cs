@@ -1,5 +1,4 @@
 ﻿using System;
-using DbUp.Engine.Output;
 using DbUp.Engine.Transactions;
 using DbUp.Support;
 
@@ -22,7 +21,7 @@ namespace DbUp.SqlServer
         /// var journal = new TableJournal("Server=server;Database=database;Trusted_Connection=True", "dbo", "MyVersionTable");
         /// </example>
         public SqlTableJournal(Func<IConnectionManager> connectionManager, Func<IUpgradeLog> logger, string schema, string table)
-            : base(connectionManager, logger, new SqlServerObjectParser(), schema, table)
+            : base(connectionManager, new SqlServerObjectParser(), schema, table)
         {
         }
 
